@@ -1,5 +1,5 @@
-import { Grid, Divider } from "@mui/material";
-// import { Route, Switch } from "react-router-dom";
+import { Grid } from "@mui/material";
+import { Route, Switch } from "react-router-dom";
 
 function App() {
   return (
@@ -24,7 +24,34 @@ function App() {
               <p>44 Anson Road, Singapore 688044</p>
               <p>Shop ratings: 4.5 starts</p>
             </Grid>
-            <Divider />
+          </Grid>
+          <Grid item md={12}>
+            <Switch>
+              <Route exact path="/restaurant/reservation">
+                <Reservation></Reservation>
+              </Route>
+              <Route exact path="/restaurant/queue">
+                <Queue></Queue>
+              </Route>
+              <Route exact path="/restaurant/profile">
+                <Profile></Profile>
+              </Route>
+              <Route exact path="/restaurant/menu">
+                <Menu></Menu>
+              </Route>
+              <Route exact path="/restaurant/seat">
+                <Seat></Seat>
+              </Route>
+              <Route exact path="/restaurant/insights">
+                <Insights></Insights>
+              </Route>
+              <Route exact path="/restaurant/completed_orders">
+                <Completed></Completed>
+              </Route>
+              <Route exact path="/restaurant/reviews">
+                <Reviews></Reviews>
+              </Route>
+            </Switch>
           </Grid>
         </Grid>
       </Grid>
