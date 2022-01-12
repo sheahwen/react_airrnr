@@ -68,3 +68,17 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### Documentation
+
+##### Restaurant routes
+/restaurant/reservations - show reservations and orders
+/restaurant/queue - show the queued dishes
+/restaurant/profile - edit restaurant profile
+/restaurant/menu - edit restaurant menu
+/restaurant/seat - edit restaurant seat
+/restaurant/insights - show business insights
+/restaurant/completed_orders - show completed orders
+/restaurant/reviews - show reviews
+
+##### Customer routes
