@@ -71,6 +71,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### Documentation
 
+##### API - Endpoint, method, payload, response, error
+
+| URL | Method | Payload | Response | Error |
+---------------------------------------------
+
+
 ##### Restaurant routes
 /restaurant/reservations - show reservations and orders
 /restaurant/queue - show the queued dishes
