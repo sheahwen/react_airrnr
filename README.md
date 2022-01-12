@@ -71,7 +71,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### Documentation
 
-##### API - Endpoint, method, payload, response, error
+##### API
 
 | Endpoint | Method | Payload | Response | Error |
 | --- | --- | --- | --- | --- |
