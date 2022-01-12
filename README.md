@@ -73,8 +73,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ##### API - Endpoint, method, payload, response, error
 
-| URL | Method | Payload | Response | Error |
----------------------------------------------
+| Endpoint | Method | Payload | Response | Error |
+| --- | --- | --- | --- | --- |
+| abc | abc | abc | abc | abc |
 
 
 ##### Restaurant routes
