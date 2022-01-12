@@ -73,9 +73,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ##### API
 
-| Endpoint | Method | Payload | Response | Error |
-| --- | --- | --- | --- | --- |
-| abc | abc | abc | abc | abc |
+| Endpoint | Method | Description | Payload | Response | Error |
+| --- | --- | --- | --- | --- | --- |
+| abc | abc | abc | abc | abc | abc |
 
 
 ##### Restaurant routes
