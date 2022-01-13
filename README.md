@@ -79,13 +79,17 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 
 ##### Restaurant routes
-/restaurant/reservations - show reservations and orders
-/restaurant/queue - show the queued dishes
-/restaurant/profile - edit restaurant profile
-/restaurant/menu - edit restaurant menu
-/restaurant/seat - edit restaurant seat
-/restaurant/insights - show business insights
-/restaurant/completed_orders - show completed orders
-/restaurant/reviews - show reviews
+- /restaurant/reservations - show reservations and orders
+- /restaurant/queue - show the queued dishes
+- /restaurant/profile - edit restaurant profile
+- /restaurant/menu - edit restaurant menu
+- /restaurant/seat - edit restaurant seat
+- /restaurant/insights - show business insights
+- /restaurant/completed_orders - show completed orders
+- /restaurant/reviews - show reviews
 
 ##### Customer routes
+- /customer/home - homepage
+- /customer/filter - filter and show search results
+- /customer/restaurant-details - show restaurant details and for booking
+- /customer/orders - show all orders
