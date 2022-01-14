@@ -13,7 +13,7 @@ code {
 }
 
 /* ----------------------------------🍗🧀🌮
-------------------------NAV BAR */
+------------------------RESTAURANT NAV BAR */
 .navBar {
   background-color: aqua;
 }
@@ -21,4 +21,110 @@ code {
 .navBar img {
   border-radius: 50%;
   width: 12vw;
+}
+
+/* ----------------------------------🍗🧀🌮
+------------------------CUSTOMER NAV BAR */
+.customerNavItem {
+  display: inline;
+  border-right: solid 1px gray;
+  padding-right: 15px;
+  cursor: pointer;
+  padding-left: 15px;
+}
+
+.customerNavBar {
+  justify-content: space-between;
+}
+
+.customerNavBarRight {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 5vw;
+}
+
+.searchBarItem {
+  display: inline;
+  padding-right: 20px;
+}
+
+/* ----------------------------------🍗🧀🌮
+------------------------CUSTOMER HOME */
+
+/* ------------------------NAME,DATE,GUESTS */
+
+.searchSection {
+  display: flex;
+  margin-top: 50px;
+  justify-content: center;
+}
+.homeSearchBar {
+  /* background-color: gray; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70vw;
+  height: 10vh;
+}
+
+/* ------------------------BODY */
+.imageSection {
+  margin-top: 20px;
+  position: relative;
+}
+
+.imageSection img {
+  width: 100%;
+  height: 70vh;
+  object-fit: cover;
+  object-position: 50% 75%;
+}
+
+.imageSection .imageText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  font-size: 25px;
+}
+
+.filterCuisineForm {
+  width: 200px;
+}
+
+.restaurantCardSection {
+  display: flex;
+}
+
+/* ------------------------RESTAURANT DETAILS PAGE */
+.detailsRating {
+  display: flex;
+}
+
+.detailsRating #numberOfReviews {
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+#phone {
+  display: inline;
+}
+
+#address {
+  display: inline;
+}
+
+.detailsMenu {
+  background-color: gray;
+}
+
+.bookingDetails {
+  border: 1px gray solid;
+}
+
+.menuCategory {
+  margin-right: 20px;
 }
