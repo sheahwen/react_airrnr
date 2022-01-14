@@ -91,5 +91,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ##### Customer routes
 - /customer/home - homepage
 - /customer/filter - filter and show search results
-- /customer/restaurant-details - show restaurant details and for booking
-- /customer/orders - show all orders
+- /customer/restaurant-details - show restaurant details and where booking is done
+- /customer/orders - show all reservations
