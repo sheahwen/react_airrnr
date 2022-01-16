@@ -1,12 +1,16 @@
 import { Route, Switch } from "react-router-dom";
 import Restaurant from "./components/Restaurant";
 import Customer from "./components/Customer";
+import Main from "./pages/Main";
 
 const App = () => {
   return (
     <div className="App">
       <div> abc</div>
       <Switch>
+        <Route exact path="/">
+          <Main />
+        </Route>
         <Route path="/restaurant">
           <Restaurant></Restaurant>
         </Route>

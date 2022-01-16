@@ -27,3 +27,39 @@
 - /customer/filter - filter and show search results
 - /customer/restaurant-details - show restaurant details and where booking is done
 - /customer/orders - show all reservations
+
+### Helper Function, Custom Hooks
+
+useFetch: Custom Hooks for CRUD operation.
+
+```javascript
+//🌟to use it import the custom hook
+import useFetch from "../hooks/useFetch";
+
+//🌟delclare the initial state. the url here is the base url. we will specify the endpoint below.
+const [{ data, loading, error }, callFetch] = useFetch(
+  "http://localhost:5000/api"
+);
+
+//🌟to read we call the callFetch. "/restaurant" is the endpoint and the full url is
+//http://localhost:5000/api/restaurant
+useEffect(() => {
+  callFetch("/restaurant");
+}, []);
+
+//🌟alternative create a button with onClick point to buttonOnclick
+const buttonOnclick = () => {
+  callFetch("/restaurant");
+};
+
+//🌟to perform other method such as POST
+const buttonOnclick = () => {
+  const submitData = {
+    name: "abcd",
+    age: 18,
+  };
+  //🌟 1st param = endpoint, 2nd param = Method default to GET
+  // 3rd param = payload
+  callFetch("/restaurant", "POST", submitData);
+};
+```
