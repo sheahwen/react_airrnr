@@ -1,4 +1,3 @@
-import { convertLength } from "@mui/material/styles/cssUtils";
 import { useState, useEffect, useCallback } from "react";
 
 const useFetch = (baseUrl) => {
@@ -10,8 +9,6 @@ const useFetch = (baseUrl) => {
 
   const callFetch = useCallback(
     (routes, method = "GET", payload = {}) => {
-      console.log("callFetchexec");
-      console.log(payload);
       setEndPoint(baseUrl + routes);
       if (method !== "GET") {
         const requestOptions = {
@@ -30,7 +27,6 @@ const useFetch = (baseUrl) => {
 
   useEffect(() => {
     const abortController = new AbortController();
-    console.log("inside useEffect");
     if (!loading) {
       return;
     }
