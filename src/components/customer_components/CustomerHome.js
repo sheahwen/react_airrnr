@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { TextField, Button, Link } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
@@ -95,13 +96,20 @@ const CustomerHome = (props) => {
               }}
             />
           </div>
-          <Button
+          {/* react router dom use link to instead of href */}
+          <Link
+            component={RouterLink}
+            to={{
+              pathname: "/customer/filter",
+              state: {
+                queryProps: { queryAll },
+              },
+            }}
             className="searchBarItem"
-            onClick={handleSearch}
-            href="/customer/filter"
+            underline="none"
           >
             <SearchOutlinedIcon />
-          </Button>
+          </Link>
         </div>
       </div>
       <div className="imageSection">

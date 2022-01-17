@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import {
   Grid,
   TextField,
@@ -11,6 +12,9 @@ import {
 import RestaurantCard from "./RestaurantCard";
 
 const CustomerFilter = (props) => {
+  const location = useLocation();
+  const { queryProps = {} } = location.state || {};
+  console.log("query from home", queryProps); //for debugging...remember to delete
   // price bar
   const [priceRange, setPriceRange] = useState([5, 30]);
 
