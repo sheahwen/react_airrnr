@@ -1,14 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TextField, Button, Link } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 const CustomerHome = (props) => {
   // query
-  // const [queryKeyword, setqueryKeyword] = useState();
-  // const [queryDate, setqueryDate] = useState();
-  // const [queryTime, setqueryTime] = useState();
-  // const [queryPax, setqueryPax] = useState();
-
   const initialState = {
     keyword: null,
     date: null,
@@ -21,14 +16,23 @@ const CustomerHome = (props) => {
     setQueryAll({ ...queryAll, [prop]: event.target.value });
   };
 
-  const handleSearch = () => {
-    props.updateQueryObj(queryAll);
+  const handleSearch = (event) => {
+    // event.preventDefault();
+    console.log("searched");
+    console.log(queryAll);
+    props.updateQueryFunc(queryAll);
   };
 
   const handleSuibian = () => {
     setQueryAll(initialState);
-    props.updateQueryObj(queryAll);
+    props.updateQueryFunc(initialState);
   };
+
+  // useEffect(() => {
+  //   return () => {
+  //     setQueryAll(initialState);
+  //   };
+  // }, []);
 
   return (
     <>
@@ -91,13 +95,13 @@ const CustomerHome = (props) => {
               }}
             />
           </div>
-          <Link
+          <Button
             className="searchBarItem"
+            onClick={handleSearch}
             href="/customer/filter"
-            underline="none"
           >
-            <SearchOutlinedIcon onClick={handleSearch} />
-          </Link>
+            <SearchOutlinedIcon />
+          </Button>
         </div>
       </div>
       <div className="imageSection">
@@ -109,6 +113,7 @@ const CustomerHome = (props) => {
             variant="contained"
             size="large"
             sx={{ color: "#894AF8", backgroundColor: "white" }}
+            href="/customer/filter"
           >
             Suibian
           </Button>
