@@ -35,7 +35,7 @@ const Customer = () => {
   const [queryAll, setQueryAll] = useState(initialState);
 
   const updateQueryAll = (obj) => {
-    setQueryAll({ ...queryAll, ...obj });
+    setQueryAll(obj);
   };
 
   return (
@@ -45,6 +45,7 @@ const Customer = () => {
           <Grid item md={6}>
             <Link href="/customer/home" underline="none">
               AIRRNR LOGO
+              {queryAll.keyword}
             </Link>
           </Grid>
           <Grid item md={6}>
@@ -100,9 +101,10 @@ const Customer = () => {
       <Grid item md={12} className="customerBody">
         <Switch>
           <Route exact path="/customer/home">
-            <CustomerHome updateQueryObj={updateQueryAll}></CustomerHome>
+            <CustomerHome updateQueryFunc={updateQueryAll}></CustomerHome>
           </Route>
           <Route exact path="/customer/filter">
+            {console.log(queryAll)}
             <CustomerFilter queryObj={queryAll}></CustomerFilter>
           </Route>
           <Route exact path="/customer/restaurant-details">

@@ -20,12 +20,11 @@ const CustomerFilter = (props) => {
   };
 
   // queryResults
-  const queryObj = props.queryObj;
+  const [queryObj, setQueryObj] = useState(props.queryObj);
   const [data, setData] = useState([]);
 
   const getData = async (url) => {
     const response = await fetch(url);
-    console.log("function started");
     const parsedResponse = await response.json();
     setData(parsedResponse.data);
   };
@@ -57,6 +56,7 @@ const CustomerFilter = (props) => {
     <Grid container>
       <Grid item md={3}>
         <h2>Filtered by</h2>
+        <h1>{console.log(props.queryObj)}</h1>
         <div className="filterCriteria" id="filterDate">
           <TextField
             id="outlined-basic"
