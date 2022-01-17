@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Grid,
   TextField,
@@ -10,14 +10,48 @@ import {
 } from "@mui/material";
 import RestaurantCard from "./RestaurantCard";
 
-const CustomerFilter = () => {
-  // state declaration
+const CustomerFilter = (props) => {
+  // price bar
   const [priceRange, setPriceRange] = useState([5, 30]);
 
   // event listener
   const handleChange = (e, newPrice) => {
     setPriceRange(newPrice);
   };
+
+  // queryResults
+  const queryObj = props.queryObj;
+  const [data, setData] = useState([]);
+
+  const getData = async (url) => {
+    const response = await fetch(url);
+    console.log("function started");
+    const parsedResponse = await response.json();
+    setData(parsedResponse.data);
+  };
+
+  useEffect(() => {
+    let queryStr = "";
+    if (queryObj.name !== undefined) {
+      queryStr = "?find=" + queryObj.name;
+    } // to add in other fields
+    const url = "https://airrnr-be.herokuapp.com/api/restaurant" + queryStr;
+    getData(url);
+  }, []);
+
+  // print search results
+  const printResults = data.map((restaurant, index) => {
+    return (
+      <RestaurantCard
+        name={restaurant.name}
+        type={restaurant["cuisine_type"]}
+        openhrs={restaurant.openhrs}
+        rating={restaurant.rating}
+        id={index}
+        img={restaurant.img}
+      ></RestaurantCard>
+    );
+  });
 
   return (
     <Grid container>
@@ -89,12 +123,9 @@ const CustomerFilter = () => {
       <Grid item md={9}>
         <Grid container spacing={2}>
           <Grid item md={12}>
-            <h2>Showing 123 Restaurants</h2>
+            <h2>Showing {data.length} Restaurants</h2>
           </Grid>
-          <RestaurantCard></RestaurantCard>
-          <RestaurantCard></RestaurantCard>
-          <RestaurantCard></RestaurantCard>
-          <RestaurantCard></RestaurantCard>
+          {printResults}
         </Grid>
       </Grid>
     </Grid>

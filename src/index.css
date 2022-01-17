@@ -27,7 +27,7 @@ code {
 ------------------------CUSTOMER NAV BAR */
 .customerNavItem {
   display: inline;
-  border-right: solid 1px gray;
+  /* border-right: solid 1px gray; */
   padding-right: 15px;
   cursor: pointer;
   padding-left: 15px;
@@ -43,9 +43,17 @@ code {
   margin-right: 5vw;
 }
 
+#navItemCart {
+  border-right: none;
+}
+
 .searchBarItem {
   display: inline;
   padding-right: 20px;
+}
+
+.searchBarItem #searchButton {
+  background-color: gray;
 }
 
 /* ----------------------------------🍗🧀🌮
@@ -97,6 +105,23 @@ code {
 
 .restaurantCardSection {
   display: flex;
+}
+
+.restaurantCard #cardName {
+  line-height: 1.4em;
+  height: 2.8em;
+  max-height: 2.8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.restaurantCard #cardCuisine {
+  line-height: 1.4em;
+  height: 1.4em;
+  max-height: 1.4em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ------------------------RESTAURANT DETAILS PAGE */

@@ -25,6 +25,19 @@ const Customer = () => {
     } else setDrawerState(true);
   };
 
+  // query
+  const initialState = {
+    keyword: null,
+    date: null,
+    time: null,
+    pax: null,
+  };
+  const [queryAll, setQueryAll] = useState(initialState);
+
+  const updateQueryAll = (obj) => {
+    setQueryAll({ ...queryAll, ...obj });
+  };
+
   return (
     <Grid container>
       <Grid item md={12}>
@@ -56,16 +69,12 @@ const Customer = () => {
                 underline="none"
               >
                 My reservations
-                <Link
-                  className="customerNavItem"
-                  href="/customer/guides"
-                  underline="none"
-                >
-                  Guides
-                </Link>
               </Link>
-              <div>
-                <ShoppingCartIcon onClick={toggleDrawer} />
+              <div className="customerNavItem" id="navItemCart">
+                <ShoppingCartIcon
+                  style={{ fill: "#1976d2" }}
+                  onClick={toggleDrawer}
+                />
               </div>
               <div>
                 <Drawer
@@ -91,10 +100,10 @@ const Customer = () => {
       <Grid item md={12} className="customerBody">
         <Switch>
           <Route exact path="/customer/home">
-            <CustomerHome></CustomerHome>
+            <CustomerHome updateQueryObj={updateQueryAll}></CustomerHome>
           </Route>
           <Route exact path="/customer/filter">
-            <CustomerFilter></CustomerFilter>
+            <CustomerFilter queryObj={queryAll}></CustomerFilter>
           </Route>
           <Route exact path="/customer/restaurant-details">
             <RestaurantDetails></RestaurantDetails>
