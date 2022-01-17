@@ -6,17 +6,14 @@ import Main from "./pages/Main";
 const App = () => {
   return (
     <div className="App">
-      <div> abc</div>
       <Switch>
-        <Route exact path="/">
-          <Main />
-        </Route>
-        <Route path="/restaurant">
+        <Route exact path="/" component={Main} />
+        {/* <Route path="/restaurant">
           <Restaurant></Restaurant>
         </Route>
         <Route path="/customer">
           <Customer></Customer>
-        </Route>
+        </Route> */}
       </Switch>
     </div>
   );
