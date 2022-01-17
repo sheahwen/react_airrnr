@@ -10,28 +10,57 @@ import {
 } from "@mui/material";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 
-const RestaurantCard = () => {
+const RestaurantCard = (props) => {
+  // print cuisine type
+  const printCuisine = props.type
+    .map((cuisine) => {
+      return cuisine;
+    })
+    .join(", ");
+
+  // print opening hours
+  const convertHour = (str) => {
+    if (Number(str.slice(0, 2)) < 12) {
+      return `${str.slice(0, 2)}:${str.slice(3, 5)}am`;
+    } else {
+      return `${Number(str.slice(0, 2)) - 12}:${str.slice(3, 5)}pm`;
+    }
+  };
+  const startHrs = convertHour(props.openhrs[0].start);
+  const closeHrs = convertHour(props.openhrs[0].end);
+
   return (
     <Grid item md={4}>
-      <Card className="restaurantCard" sx={{ maxWidth: 340 }}>
+      <Card className="restaurantCard">
         <CardMedia
           component="img"
           alt="pancake"
-          height="140"
-          image="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=480&q=80"
+          height="260vh"
+          image={props.img}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            McDonalds
+          <Typography
+            className="restaurantCard"
+            id="cardName"
+            gutterBottom
+            variant="h5"
+            component="div"
+          >
+            {props.name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Fast food, Fried food, Western
+          <Typography
+            className="restaurantCard"
+            id="cardCuisine"
+            variant="body2"
+            color="text.secondary"
+          >
+            {printCuisine}
           </Typography>
           <Typography variant="body3" color="text.secondary">
             <AccessTimeOutlinedIcon />
-            9am - 9pm
+            {startHrs} - {closeHrs}
           </Typography>
-          <Typography component="legend">Read only</Typography>
+          <Typography component="legend"></Typography>
           <Rating name="read-only" value={3} readOnly />
         </CardContent>
         <CardActions>
