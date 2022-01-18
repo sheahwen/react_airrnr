@@ -185,3 +185,7 @@ code {
   z-index: 2;
   top: 5rem;
 }
+
+.bookingPanel .selectedSlot {
+  background-color: gray;
+}

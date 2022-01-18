@@ -206,7 +206,7 @@ const RestaurantDetails = () => {
 
   const [value, setValue] = useState(0);
 
-  const handleChange = (event, newValue) => {
+  const handleTab = (event, newValue) => {
     setValue(newValue);
   };
 
@@ -263,6 +263,9 @@ const RestaurantDetails = () => {
   });
 
   // ----------------------- FOR RIGHT PANEL
+  const handleChange = (prop) => (event) => {
+    setQuery({ ...query, [prop]: event.target.value });
+  };
   // specify min date for date picker
   const generateCurrentDate = () => {
     const current = new Date();
@@ -272,6 +275,16 @@ const RestaurantDetails = () => {
     }
     const dateStr = `${current.getFullYear()}-${month}-${current.getDate()}`;
     return dateStr;
+  };
+
+  // for slot selection
+  const [slot, setSlot] = useState();
+
+  const handleSlot = (e) => {
+    e.preventDefault();
+    let timeStr = e.target.innerText;
+    timeStr = timeStr.slice(0, 2) + ":" + timeStr.slice(2, 4);
+    setSlot(timeStr);
   };
 
   let slotArr = [];
@@ -288,12 +301,10 @@ const RestaurantDetails = () => {
       let startMin = Math.ceil(Number(startTime.slice(2, 4)) / 15) * 15;
       let endMin = Math.floor(Number(endTime.slice(2, 4)) / 15) * 15;
       let iStr = String(i);
-      if (i < 10) iStr = `0{i}`;
+      if (i < 10) iStr = `0${i}`;
       for (let j = 0; j <= 45; j += 15) {
         let jStr = String(j);
         if (j < 10) jStr = "00";
-        console.log("istr", iStr);
-        console.log("jstr", jStr);
         if (
           (i === Number(startTime.slice(0, 2)) && j < startMin) ||
           (i === Number(endTime.slice(0, 2)) && j > endMin)
@@ -305,7 +316,7 @@ const RestaurantDetails = () => {
   }
 
   const printTimeSlots = slotArr.map((slot) => {
-    return <Button>{slot}</Button>;
+    return <Button onClick={handleSlot}>{slot}</Button>;
   });
 
   return (
@@ -330,7 +341,7 @@ const RestaurantDetails = () => {
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs
               value={value}
-              onChange={handleChange}
+              onChange={handleTab}
               aria-label="basic tabs example"
             >
               <Tab label="About" {...a11yProps(0)} />
@@ -387,6 +398,7 @@ const RestaurantDetails = () => {
                 label="Date"
                 variant="outlined"
                 type="date"
+                onChange={handleChange("time")}
                 value={query.date}
                 size="small"
                 inputProps={{
@@ -404,6 +416,24 @@ const RestaurantDetails = () => {
                 variant="outlined"
                 type="number"
                 size="small"
+                onChange={handleChange("pax")}
+                value={query.pax}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </div>
+            <div className="bookingField" id="bookingTimeSelected">
+              <TextField
+                id="outlined-basic"
+                label="Time slot selected"
+                variant="outlined"
+                type="time"
+                size="small"
+                value={slot}
+                InputProps={{
+                  readOnly: true,
+                }}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -412,6 +442,9 @@ const RestaurantDetails = () => {
             <div className="bookingField" id="bookingTime">
               {printTimeSlots}
             </div>
+            <Button variant="contained" href="#contained-buttons">
+              Reserve
+            </Button>
           </Box>
         </Grid>
       </Grid>

@@ -121,6 +121,7 @@ const CustomerFilter = (props) => {
             variant="outlined"
             type="time"
             size="small"
+            minutesStep="15"
             InputLabelProps={{
               shrink: true,
             }}
