@@ -6,7 +6,6 @@ import Main from "./pages/Main";
 const App = () => {
   return (
     <div className="App">
-      <div> abc</div>
       <Switch>
         <Route exact path="/">
           <Main />

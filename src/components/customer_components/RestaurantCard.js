@@ -13,6 +13,8 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 
 const RestaurantCard = (props) => {
   const clickedId = props.id;
+  const query = props.query;
+  console.log(query);
 
   // print cuisine type
   const printCuisine = props.type
@@ -77,7 +79,7 @@ const RestaurantCard = (props) => {
             to={{
               pathname: "/customer/reservation",
               state: {
-                queryProps: clickedId,
+                queryProps: { clickedId, query },
               },
             }}
           >

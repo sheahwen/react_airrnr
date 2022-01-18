@@ -67,6 +67,7 @@ const CustomerFilter = (props) => {
         rating={restaurant.rating}
         id={restaurant["_id"]}
         img={restaurant.img}
+        query={queryObj}
       ></RestaurantCard>
     );
   });

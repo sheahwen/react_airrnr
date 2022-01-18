@@ -98,6 +98,7 @@ const Customer = () => {
           </Grid>
         </Grid>
       </Grid>
+      <Grid item md={12} className="space"></Grid>
       <Grid item md={12} className="customerBody">
         <Switch>
           <Route exact path="/customer/reservation">
