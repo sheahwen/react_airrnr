@@ -125,6 +125,15 @@ code {
 }
 
 /* ------------------------RESTAURANT DETAILS PAGE */
+.restaurantImgLeft {
+  width: 100%;
+  max-height: 60vh;
+}
+.restaurantImgRight {
+  width: 100%;
+  max-height: 29vh;
+}
+
 .detailsRating {
   display: flex;
 }
@@ -132,18 +141,11 @@ code {
 .detailsRating #numberOfReviews {
   font-weight: 500;
   text-decoration: underline;
+  margin-left: 20px;
 }
 
 #phone {
   display: inline;
-}
-
-#address {
-  display: inline;
-}
-
-.bookingDetails {
-  border: 1px gray solid;
 }
 
 .menuCategory {

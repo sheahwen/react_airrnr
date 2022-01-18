@@ -14,17 +14,21 @@ import RestaurantCard from "./RestaurantCard";
 const CustomerFilter = (props) => {
   const location = useLocation();
   const { queryProps = {} } = location.state || {};
-  console.log("query from home", queryProps); //for debugging...remember to delete
+
   // price bar
   const [priceRange, setPriceRange] = useState([5, 30]);
 
   // event listener
-  const handleChange = (e, newPrice) => {
+  const handlePriceChange = (e, newPrice) => {
     setPriceRange(newPrice);
   };
 
   // queryResults
-  const [queryObj, setQueryObj] = useState(props.queryObj);
+  const initialState = {};
+  if (queryProps.queryAll) {
+    initialState = queryProps.queryAll;
+  }
+  const [queryObj, setQueryObj] = useState(initialState);
   const [data, setData] = useState([]);
 
   const getData = async (url) => {
@@ -35,12 +39,23 @@ const CustomerFilter = (props) => {
 
   useEffect(() => {
     let queryStr = "";
-    if (queryObj.name !== undefined) {
+    if (queryObj.name) {
       queryStr = "?find=" + queryObj.name;
     } // to add in other fields
     const url = "https://airrnr-be.herokuapp.com/api/restaurant" + queryStr;
     getData(url);
   }, []);
+
+  // specify min date for date picker
+  const generateCurrentDate = () => {
+    const current = new Date();
+    let month = String(current.getMonth() + 1);
+    if (month.length < 2) {
+      month = "0" + month;
+    }
+    const dateStr = `${current.getFullYear()}-${month}-${current.getDate()}`;
+    return dateStr;
+  };
 
   // print search results
   const printResults = data.map((restaurant, index) => {
@@ -50,24 +65,47 @@ const CustomerFilter = (props) => {
         type={restaurant["cuisine_type"]}
         openhrs={restaurant.openhrs}
         rating={restaurant.rating}
-        id={index}
+        id={restaurant["_id"]}
         img={restaurant.img}
       ></RestaurantCard>
     );
   });
 
+  // handle users inputs and action
+  const handleChange = (prop) => (event) => {
+    setQueryObj({ ...queryObj, [prop]: event.target.value });
+  };
+
   return (
     <Grid container>
       <Grid item md={3}>
         <h2>Filtered by</h2>
-        <h1>{console.log(props.queryObj)}</h1>
+        <div className="filterCriteria" id="filterKeyword">
+          <TextField
+            value={queryObj.keyword}
+            onChange={handleChange("keyword")}
+            id="outlined-basic"
+            label="Name / Cuisine"
+            variant="outlined"
+            size="small"
+            type="text"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </div>
         <div className="filterCriteria" id="filterDate">
           <TextField
+            value={queryObj.date}
+            onChange={handleChange("date")}
             id="outlined-basic"
             label="Date"
             variant="outlined"
             type="date"
             size="small"
+            inputProps={{
+              min: generateCurrentDate(),
+            }}
             InputLabelProps={{
               shrink: true,
             }}
@@ -75,6 +113,8 @@ const CustomerFilter = (props) => {
         </div>
         <div className="filterCriteria" id="filterTime">
           <TextField
+            value={queryObj.time}
+            onChange={handleChange("time")}
             id="outlined-basic"
             label="TIme"
             variant="outlined"
@@ -103,6 +143,8 @@ const CustomerFilter = (props) => {
         </div>
         <div className="filterCriteria" id="filterGuest">
           <TextField
+            value={queryObj.pax}
+            onChange={handleChange("pax")}
             id="outlined-basic"
             label="Guest(s)"
             variant="outlined"
@@ -113,12 +155,13 @@ const CustomerFilter = (props) => {
             }}
           />
         </div>
+        {/*  not completed, to continue when data is avaiable */}
         <div className="filterCriteria" id="filterPrice">
           <h4>Price</h4>
           <Slider
             getAriaLabel={() => "Temperature range"}
             value={priceRange}
-            onChange={handleChange}
+            onChange={handlePriceChange}
             valueLabelDisplay="auto"
             // getAriaValueText={valuetext}
           />

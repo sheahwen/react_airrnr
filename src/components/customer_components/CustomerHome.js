@@ -27,13 +27,8 @@ const CustomerHome = (props) => {
   const handleSuibian = () => {
     setQueryAll(initialState);
     props.updateQueryFunc(initialState);
+    setQueryAll(initialState);
   };
-
-  // useEffect(() => {
-  //   return () => {
-  //     setQueryAll(initialState);
-  //   };
-  // }, []);
 
   return (
     <>
@@ -44,7 +39,7 @@ const CustomerHome = (props) => {
               value={queryAll.keyword}
               onChange={handleChange("keyword")}
               id="outlined-basic"
-              label="Name"
+              label="Name / Cuisine"
               variant="outlined"
               size="small"
               type="text"
@@ -96,7 +91,6 @@ const CustomerHome = (props) => {
               }}
             />
           </div>
-          {/* react router dom use link to instead of href */}
           <Link
             component={RouterLink}
             to={{
