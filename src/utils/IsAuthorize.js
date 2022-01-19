@@ -1,4 +1,4 @@
-const AuthVerify = () => {
+const IsAuthorize = () => {
   // const user = userInfo;
   const user = JSON.parse(localStorage.getItem("userInfo"));
   console.log(user);
@@ -10,4 +10,4 @@ const AuthVerify = () => {
   }
 };
 
-export default AuthVerify;
+export default IsAuthorize;

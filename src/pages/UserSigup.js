@@ -3,19 +3,20 @@ import { FaSignInAlt } from "react-icons/fa";
 import themeStyle from "../theme/theme";
 import AppBarHome from "../components/Shared/AppBarHome";
 import axios from "axios";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 const UserSigup = () => {
   let history = useHistory();
-  const initValue = {
+
+  const initialValue = {
     name: "",
     email: "",
     phone: "",
     password: "",
     confirmPassword: "",
   };
-  const [formData, setFormData] = useState(initValue);
+  const [formData, setFormData] = useState(initialValue);
   const [error, setError] = useState("");
   const [userInfo, setUserInfo] = useLocalStorage("userInfo", {});
 
@@ -45,9 +46,13 @@ const UserSigup = () => {
     }
     const submitData = JSON.stringify({
       name: formData.name,
+      username: "",
+      img: "",
+      gender: "",
       phone: formData.phone,
       email: formData.email,
       password: formData.password,
+      hasRestaurant: false,
     });
     const response = await axios
       .post(process.env.REACT_APP_URL + "/users", submitData, {
@@ -59,17 +64,13 @@ const UserSigup = () => {
       .catch((err) => {
         return err.response;
       });
-    console.log(response);
     if (response.status === 201) {
       setUserInfo(response.data);
       // history.push("/user/profile");
-      const userProps = {
-        _id: response.data._id,
-        hasRestaurant: response.data.hasRestaurant,
-      };
-
+      const userProps = response.data;
+      console.log("signup", userProps);
       history.push({
-        pathname: "/user/profile",
+        pathname: "/user/profile/edit",
         state: { userProps },
       });
     } else if (response.data.status === "failed") {
