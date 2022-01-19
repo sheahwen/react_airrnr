@@ -8,9 +8,14 @@ import {
   Rating,
   Grid,
 } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 
 const RestaurantCard = (props) => {
+  const clickedId = props.id;
+  console.log(clickedId);
+  const query = props.query;
+
   // print cuisine type
   const printCuisine = props.type
     .map((cuisine) => {
@@ -28,6 +33,9 @@ const RestaurantCard = (props) => {
   };
   const startHrs = convertHour(props.openhrs[0].start);
   const closeHrs = convertHour(props.openhrs[0].end);
+
+  // user click visit restaurant
+  const handleClick = () => {};
 
   return (
     <Grid item md={4}>
@@ -61,10 +69,22 @@ const RestaurantCard = (props) => {
             {startHrs} - {closeHrs}
           </Typography>
           <Typography component="legend"></Typography>
-          <Rating name="read-only" value={3} readOnly />
+          <Rating name="read-only" value={props.rating} readOnly />
         </CardContent>
         <CardActions>
-          <Button size="small">Visit Restaurant</Button>
+          <Button
+            onClick={handleClick}
+            size="small"
+            component={RouterLink}
+            to={{
+              pathname: "/customer/reservation",
+              state: {
+                queryProps: { clickedId, query },
+              },
+            }}
+          >
+            Book a table
+          </Button>
         </CardActions>
       </Card>
     </Grid>

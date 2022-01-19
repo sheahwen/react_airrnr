@@ -98,19 +98,19 @@ const Customer = () => {
           </Grid>
         </Grid>
       </Grid>
+      <Grid item md={12} className="space"></Grid>
       <Grid item md={12} className="customerBody">
         <Switch>
+          <Route exact path="/customer/reservation">
+            <RestaurantDetails></RestaurantDetails>
+          </Route>
           <Route exact path="/customer/home">
             <CustomerHome updateQueryFunc={updateQueryAll}></CustomerHome>
           </Route>
           <Route exact path="/customer/filter">
-            {console.log(queryAll)}
             <CustomerFilter queryObj={queryAll}></CustomerFilter>
           </Route>
-          <Route exact path="/customer/restaurant-details">
-            <RestaurantDetails></RestaurantDetails>
-          </Route>
-          <Route exact path="/customer/reservations">
+          <Route exact path="/customer/all-reservations">
             <CustomerOrders></CustomerOrders>
           </Route>
           <Route exact path="/customer/guides">
