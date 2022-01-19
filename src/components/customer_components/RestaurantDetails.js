@@ -26,6 +26,8 @@ const RestaurantDetails = () => {
   const [query, setQuery] = useState(queryProps.query);
   const [mapUrl, setMapUrl] = useState("");
   const [quantity, setQuantity] = useState({});
+  const [slot, setSlot] = useState([]);
+  const [slotSelected, setSlotSelected] = useState();
 
   const getData = async (url) => {
     const response = await fetch(url);
@@ -38,15 +40,25 @@ const RestaurantDetails = () => {
     setQuantity(quantityObj);
     const mapUrl =
       "https://open.mapquestapi.com/staticmap/v4/getmap?key=6NMIduw7Eygc0ebi3jlKvXK4QjH2kFxg&size=600,400&zoom=13&center=";
-    const coordinate = `${data.geolocation.lat},${data.geolocation.lng}`;
+    const coordinate = `${parsedResponse.data[0].geolocation.lat},${parsedResponse.data[0].geolocation.lng}`;
     setMapUrl(mapUrl + coordinate);
+  };
+  const getSlot = async (url) => {
+    const response = await fetch(url);
+    const parsedResponse = await response.json();
+    console.log(parsedResponse.data);
+    setSlot(parsedResponse.data);
   };
 
   useEffect(() => {
-    const url = "https://airrnr-be.herokuapp.com/api/restaurant/" + queryId;
-    // const url = "http://localhost:5000/api/restaurant/" + queryId;
-    console.log(url);
+    // const url = "https://airrnr-be.herokuapp.com/api/restaurant/" + queryId;
+    const url = "http://localhost:5000/api/restaurant/" + queryId;
+    const sloturl =
+      "http://localhost:5000/api/restaurant/slots/" +
+      queryId +
+      "?date=20220122&pax=1";
     getData(url);
+    getSlot(sloturl);
     return () => {
       setData({});
       setMapUrl();
@@ -278,40 +290,24 @@ const RestaurantDetails = () => {
   };
 
   // for slot selection
-  const [slot, setSlot] = useState();
 
   const handleSlot = (e) => {
     e.preventDefault();
     let timeStr = e.target.innerText;
     timeStr = timeStr.slice(0, 2) + ":" + timeStr.slice(2, 4);
-    setSlot(timeStr);
+    setSlotSelected(timeStr);
   };
 
   let slotArr = [];
   if (data["openhrs"]) {
-    let startTime = data.openhrs[0].start;
-    let endTime = data.openhrs[0].end;
-    startTime = startTime.slice(0, 2) + startTime.slice(3, 5);
-    endTime = endTime.slice(0, 2) + endTime.slice(3, 5);
-    for (
-      let i = Number(startTime.slice(0, 2));
-      i <= Number(endTime.slice(0, 2));
-      i++
-    ) {
-      let startMin = Math.ceil(Number(startTime.slice(2, 4)) / 15) * 15;
-      let endMin = Math.floor(Number(endTime.slice(2, 4)) / 15) * 15;
-      let iStr = String(i);
-      if (i < 10) iStr = `0${i}`;
-      for (let j = 0; j <= 45; j += 15) {
-        let jStr = String(j);
-        if (j < 10) jStr = "00";
-        if (
-          (i === Number(startTime.slice(0, 2)) && j < startMin) ||
-          (i === Number(endTime.slice(0, 2)) && j > endMin)
-        ) {
-          console.log("skipped");
-        } else slotArr.push(`${iStr}${jStr}`);
-      }
+    for (const number of slot) {
+      const time = new Date(number);
+      let hour = time.getHours();
+      let minutes = time.getMinutes();
+      if (hour < 10) hour = `0${hour}`;
+      if (minutes < 10) minutes = `0${minutes}`;
+      const str = `${hour}${minutes}`;
+      slotArr.push(str);
     }
   }
 
@@ -432,7 +428,7 @@ const RestaurantDetails = () => {
                 variant="outlined"
                 type="time"
                 size="small"
-                value={slot}
+                value={slotSelected}
                 InputProps={{
                   readOnly: true,
                 }}

@@ -43,8 +43,8 @@ const CustomerFilter = (props) => {
     if (queryObj.keyword) {
       queryStr = "?find=" + queryObj.keyword;
     } // to add in other fields
-    const url = "https://airrnr-be.herokuapp.com/api/restaurant" + queryStr;
-    // const url = "http://localhost:5000/api/restaurant" + queryStr;
+    // const url = "https://airrnr-be.herokuapp.com/api/restaurant" + queryStr;
+    const url = "http://localhost:5000/api/restaurant" + queryStr;
     getData(url);
   }, []);
 
