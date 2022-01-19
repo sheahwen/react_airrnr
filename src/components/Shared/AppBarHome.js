@@ -5,7 +5,7 @@ const AppBarHome = ({ title }) => {
   return (
     <nav className="navbar py-0 border-bottom" style={{ height: "130px" }}>
       <div className="container">
-        <Logo height="110px" />
+        <Logo height="110px" width="auto" />
         <span className="fs-4">{title}</span>
 
         {/* <button
