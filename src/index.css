@@ -109,6 +109,12 @@ code {
   font-size: 25px;
 }
 
+.filterPanel {
+  position: sticky;
+  z-index: 2;
+  top: 5rem;
+}
+
 .filterCuisineForm {
   width: 200px;
 }

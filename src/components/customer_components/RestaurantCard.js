@@ -13,8 +13,8 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 
 const RestaurantCard = (props) => {
   const clickedId = props.id;
+  console.log(clickedId);
   const query = props.query;
-  console.log(query);
 
   // print cuisine type
   const printCuisine = props.type

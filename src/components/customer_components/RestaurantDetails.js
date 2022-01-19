@@ -24,7 +24,7 @@ const RestaurantDetails = () => {
 
   const [data, setData] = useState({});
   const [query, setQuery] = useState(queryProps.query);
-  const [map, setMap] = useState();
+  const [mapUrl, setMapUrl] = useState("");
   const [quantity, setQuantity] = useState({});
 
   const getData = async (url) => {
@@ -36,22 +36,20 @@ const RestaurantDetails = () => {
       quantityObj[item["_id"]] = 0;
     }
     setQuantity(quantityObj);
-  };
-
-  const getMap = async (url) => {
-    const response = await fetch(url);
-    setMap(response);
+    const mapUrl =
+      "https://open.mapquestapi.com/staticmap/v4/getmap?key=6NMIduw7Eygc0ebi3jlKvXK4QjH2kFxg&size=600,400&zoom=13&center=";
+    const coordinate = `${data.geolocation.lat},${data.geolocation.lng}`;
+    setMapUrl(mapUrl + coordinate);
   };
 
   useEffect(() => {
     const url = "https://airrnr-be.herokuapp.com/api/restaurant/" + queryId;
+    // const url = "http://localhost:5000/api/restaurant/" + queryId;
+    console.log(url);
     getData(url);
-    const mapUrl =
-      "https://open.mapquestapi.com/staticmap/v4/getmap?key=6NMIduw7Eygc0ebi3jlKvXK4QjH2kFxg&size=600,400&zoom=13&center=47.6062,-122.3321";
-    getMap(mapUrl);
     return () => {
       setData({});
-      setMap();
+      setMapUrl();
     };
   }, []);
 
@@ -124,6 +122,7 @@ const RestaurantDetails = () => {
       field: "image",
       headerName: "Image",
       width: 120,
+      sortable: false,
       renderCell: (params) => <img src={params.value} />,
     },
     { field: "item", headerName: "Item", width: 300 },
@@ -133,6 +132,7 @@ const RestaurantDetails = () => {
       field: "action",
       headerName: "Action",
       width: 200,
+      sortable: false,
       renderCell: renderActionButtons,
     },
   ];
@@ -369,6 +369,8 @@ const RestaurantDetails = () => {
             <p className="restaurantInfo" id="hours">
               {startHrs} - {closeHrs}
             </p>
+            <br></br>
+            <img src={mapUrl}></img>
 
             {/* TO RENDER OPEN STATIC MAP FROM {MAP} */}
           </TabPanel>
