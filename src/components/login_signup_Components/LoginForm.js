@@ -135,16 +135,16 @@ const LoginForm = () => {
       </form>
       <div className="row d-flex flex-column justify-content-center align-items-center">
         <span className="text-center text-muted fw-bold fs-5 my-3">or</span>
-        <button
-          type="submit"
-          className="btn btn-primary starter-button text-black"
+        <Link
+          to="/user/new"
+          className="btn btn-primary starter-button text-black d-flex flex-column justify-content-center"
           style={{
             backgroundColor: `${themeStyle.color.secondary.light}`,
             borderColor: `${themeStyle.color.secondary.light}`,
           }}
         >
-          User Sign Up
-        </button>
+          <div>User Sign Up</div>
+        </Link>
         <p
           className="fs-5 text-center my-3"
           style={{ color: `${themeStyle.color.secondary.dark}` }}
