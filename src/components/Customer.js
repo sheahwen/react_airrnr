@@ -14,6 +14,8 @@ import CustomerFilter from "./customer_components/CustomerFilter";
 import RestaurantDetails from "./customer_components/RestaurantDetails";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CustomerOrders from "./customer_components/CustomerOrders";
+import Logo from "./Shared/Logo";
+import theme from "../theme/theme";
 
 const Customer = () => {
   // states
@@ -38,15 +40,21 @@ const Customer = () => {
     setQueryAll(obj);
   };
 
+  const navBarStyle = {
+    height: "120px",
+    backgroundColor: theme.color.layering,
+  };
+
   return (
     <Grid container>
       <Grid item md={12}>
-        <Grid container className="customerNavBar">
+        <Grid container className="customerNavBar" sx={navBarStyle}>
           <Grid item md={6}>
-            <Link href="/customer/home" underline="none">
+            <Logo height="100px" width="100px" direct="/customer/home" />
+            {/* <Link href="/customer/home" underline="none">
               AIRRNR LOGO
               {queryAll.keyword}
-            </Link>
+            </Link> */}
           </Grid>
           <Grid item md={6}>
             <div className="customerNavBarRight">
@@ -98,7 +106,7 @@ const Customer = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item md={12} className="space"></Grid>
+      <Grid item md={12} mt={10} className="space"></Grid>
       <Grid item md={12} className="customerBody">
         <Switch>
           <Route exact path="/customer/reservation">

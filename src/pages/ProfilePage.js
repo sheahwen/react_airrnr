@@ -8,18 +8,18 @@ const ProfilePage = () => {
   const { userProps = {} } = location.state || {};
   console.log(userProps);
 
-  useEffect(() => {
-    const response = await axios
-      .post(process.env.REACT_APP_URL + "/users", submitData, {
-        headers: { "Content-Type": "application/json" },
-      })
-      .then((res) => {
-        return res;
-      })
-      .catch((err) => {
-        return err.response;
-      });
-  }, [third]);
+  // useEffect(() => {
+  //   const response = await axios
+  //     .post(process.env.REACT_APP_URL + "/users", submitData, {
+  //       headers: { "Content-Type": "application/json" },
+  //     })
+  //     .then((res) => {
+  //       return res;
+  //     })
+  //     .catch((err) => {
+  //       return err.response;
+  //     });
+  // }, [third]);
 
   // const {
   //   videoId = "",

@@ -3,19 +3,22 @@ import themeStyle from "../../theme/theme";
 
 const Logo = ({
   height,
+  width,
   spoon,
   table,
   logo_name,
   bgColor,
   borderSize,
   borderColor,
+  direct,
 }) => {
   return (
-    <Link to="/">
+    <Link to={direct}>
       <div
         className="rounded-3"
         style={{
           height: height,
+          width: width,
           backgroundColor: bgColor,
           display: "flex",
           justifyContent: "center",
@@ -46,11 +49,13 @@ const Logo = ({
 Logo.defaultProps = {
   bgColor: themeStyle.color.Emphasis,
   height: "50px",
+  width: "50px",
   logo_name: themeStyle.color.secondary.normal,
   spoon: themeStyle.color.primary.normal,
   table: themeStyle.color.primary.normal,
   borderColor: themeStyle.color.secondary.normal,
   borderSize: "5",
+  direct: "/",
 };
 
 export default Logo;

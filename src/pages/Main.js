@@ -7,7 +7,7 @@ const Main = () => {
     <div style={{ height: "100vh", width: "100vw" }}>
       <div className="row" style={{ width: "100%", height: "100%" }}>
         <div className="shadow-lg col-4 d-flex flex-column justify-content-center align-items-center starter-bgImg">
-          <Logo height="140px" />
+          <Logo height="140px" width="auto" />
           <h1 className="fw-bolder text-white fs-2 pb-5 pb-md-10 mt-3 text-center">
             Welcome to AirR&R <br />A Restaurants Reservation Service
           </h1>
