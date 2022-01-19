@@ -1,9 +1,7 @@
+import React from "react";
+
 const RestaurantSignup = () => {
-  return (
-    <div>
-      <h1>Restaurant Sign up</h1>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default RestaurantSignup;

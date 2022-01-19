@@ -4,6 +4,7 @@ import themeStyle from "../theme/theme";
 import AppBarHome from "../components/Shared/AppBarHome";
 import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const UserSigup = () => {
   let history = useHistory();
@@ -16,6 +17,7 @@ const UserSigup = () => {
   };
   const [formData, setFormData] = useState(initValue);
   const [error, setError] = useState("");
+  const [userInfo, setUserInfo] = useLocalStorage("userInfo", {});
 
   const clearError = () => {
     setTimeout(() => {
@@ -47,7 +49,33 @@ const UserSigup = () => {
       email: formData.email,
       password: formData.password,
     });
-    console.log("c");
+    const response = await axios
+      .post(process.env.REACT_APP_URL + "/users", submitData, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        return err.response;
+      });
+    console.log(response);
+    if (response.status === 201) {
+      setUserInfo(response.data);
+      // history.push("/user/profile");
+      const userProps = {
+        _id: response.data._id,
+        hasRestaurant: response.data.hasRestaurant,
+      };
+
+      history.push({
+        pathname: "/user/profile",
+        state: { userProps },
+      });
+    } else if (response.data.status === "failed") {
+      setError(response.data.msg);
+      clearError();
+    }
   };
 
   // {
