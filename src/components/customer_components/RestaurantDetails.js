@@ -18,6 +18,7 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 
 const RestaurantDetails = (props) => {
   // retrieve data
+  // const hi = "abc";
   const location = useLocation();
   const { queryProps = {} } = location.state || {};
   const queryId = queryProps.clickedId;
