@@ -87,6 +87,7 @@ const CustomerFilter = (props) => {
           <div className="filterCriteria" id="filterKeyword">
             <TextField
               value={queryObj.keyword}
+              margin="normal"
               onChange={handleChange("keyword")}
               id="outlined-basic"
               label="Name / Cuisine"
@@ -101,6 +102,7 @@ const CustomerFilter = (props) => {
           <div className="filterCriteria" id="filterDate">
             <TextField
               value={queryObj.date}
+              margin="normal"
               onChange={handleChange("date")}
               id="outlined-basic"
               label="Date"
@@ -119,6 +121,7 @@ const CustomerFilter = (props) => {
             <TextField
               value={queryObj.time}
               onChange={handleChange("time")}
+              margin="normal"
               id="outlined-basic"
               label="TIme"
               variant="outlined"
@@ -131,7 +134,7 @@ const CustomerFilter = (props) => {
             />
           </div>
           <div className="filterCriteria" id="filterCuisine">
-            <FormControl className="filterCuisineForm">
+            <FormControl className="filterCuisineForm" margin="normal">
               <InputLabel id="demo-simple-select-label">Cuisine</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -149,6 +152,7 @@ const CustomerFilter = (props) => {
           <div className="filterCriteria" id="filterGuest">
             <TextField
               value={queryObj.pax}
+              margin="normal"
               onChange={handleChange("pax")}
               id="outlined-basic"
               label="Guest(s)"
