@@ -30,6 +30,16 @@ const CustomerHome = (props) => {
     setQueryAll(initialState);
   };
 
+  const generateCurrentDate = () => {
+    const current = new Date();
+    let month = String(current.getMonth() + 1);
+    if (month.length < 2) {
+      month = "0" + month;
+    }
+    const dateStr = `${current.getFullYear()}-${month}-${current.getDate()}`;
+    return dateStr;
+  };
+
   return (
     <>
       <div className="searchSection">
@@ -43,6 +53,7 @@ const CustomerHome = (props) => {
               variant="outlined"
               size="small"
               type="text"
+              color="warning"
               InputLabelProps={{
                 shrink: true,
               }}
@@ -57,6 +68,9 @@ const CustomerHome = (props) => {
               variant="outlined"
               type="date"
               size="small"
+              inputProps={{
+                min: generateCurrentDate(),
+              }}
               InputLabelProps={{
                 shrink: true,
               }}
