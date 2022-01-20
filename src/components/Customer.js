@@ -7,7 +7,6 @@ import {
   ListItem,
   ListItemText,
   Link,
-  Typography,
 } from "@mui/material";
 import { Route, Switch } from "react-router-dom";
 import CustomerHome from "./customer_components/CustomerHome";
@@ -28,18 +27,6 @@ const Customer = () => {
     } else setDrawerState(true);
   };
 
-  const [orders, setOrders] = useState([]);
-  const updateOrders = (obj, menuArr) => {
-    const allOrders = [];
-    for (const id in obj) {
-      if (obj[id] !== 0) {
-        const dish = menuArr.find((item) => item["_id"] === id);
-        const itemArr = [dish.name, obj[id]];
-        allOrders.push(itemArr);
-      }
-    }
-    setOrders(allOrders);
-  };
   // query
   const initialState = {
     keyword: null,
@@ -94,7 +81,7 @@ const Customer = () => {
               </Link>
               <div className="customerNavItem" id="navItemCart">
                 <ShoppingCartIcon
-                  style={{ fill: "#894AF8" }}
+                  style={{ fill: "#1976d2" }}
                   onClick={toggleDrawer}
                 />
               </div>
@@ -106,11 +93,9 @@ const Customer = () => {
                 >
                   <Box>
                     <List>
-                      <Typography variant="h5">Your orders</Typography>
-                      {orders.map((text) => (
-                        <ListItem button key={text[0]}>
-                          <ListItemText primary={text[0]} />
-                          <ListItemText primary={text[1]} />
+                      {["All mail", "Trash", "Spam"].map((text, index) => (
+                        <ListItem button key={text}>
+                          <ListItemText primary={text} />
                         </ListItem>
                       ))}
                     </List>
@@ -125,7 +110,7 @@ const Customer = () => {
       <Grid item md={12} className="customerBody">
         <Switch>
           <Route exact path="/customer/reservation">
-            <RestaurantDetails updateOrders={updateOrders}></RestaurantDetails>
+            <RestaurantDetails></RestaurantDetails>
           </Route>
           <Route exact path="/customer/home">
             <CustomerHome updateQueryFunc={updateQueryAll}></CustomerHome>

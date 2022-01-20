@@ -16,7 +16,7 @@ import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 
-const RestaurantDetails = (props) => {
+const RestaurantDetails = () => {
   // retrieve data
   const location = useLocation();
   const { queryProps = {} } = location.state || {};
@@ -28,7 +28,6 @@ const RestaurantDetails = (props) => {
   const [quantity, setQuantity] = useState({});
   const [slot, setSlot] = useState([]);
   const [slotSelected, setSlotSelected] = useState();
-  const [drawer, setDrawer] = useState([]);
 
   const getData = async (url) => {
     const response = await fetch(url);
@@ -47,30 +46,17 @@ const RestaurantDetails = (props) => {
   const getSlot = async (url) => {
     const response = await fetch(url);
     const parsedResponse = await response.json();
+    console.log(parsedResponse.data);
     setSlot(parsedResponse.data);
   };
 
   useEffect(() => {
     // const url = "https://airrnr-be.herokuapp.com/api/restaurant/" + queryId;
     const url = "http://localhost:5000/api/restaurant/" + queryId;
-
-    let dateStr = "";
-    let paxStr = "";
-    if (query.date) {
-      const year = query.date.slice(0, 4);
-      const month = query.date.slice(5, 7);
-      const day = query.date.slice(8, 10);
-      const date = "date=" + year + month + day;
-      paxStr = "pax=" + query.pax;
-      dateStr = "date=" + year + month + day;
-    }
     const sloturl =
       "http://localhost:5000/api/restaurant/slots/" +
       queryId +
-      "?" +
-      dateStr +
-      "&" +
-      paxStr;
+      "?date=20220122&pax=1";
     getData(url);
     getSlot(sloturl);
     return () => {
@@ -112,7 +98,7 @@ const RestaurantDetails = (props) => {
       <>
         <Button
           variant="contained"
-          color="secondary"
+          color="primary"
           size="small"
           style={{ marginLeft: 16 }}
           onClick={(e) => {
@@ -126,7 +112,7 @@ const RestaurantDetails = (props) => {
         </Button>
         <Button
           variant="contained"
-          color="error"
+          color="primary"
           size="small"
           style={{ marginLeft: 10 }}
           onClick={(e) => {
@@ -143,6 +129,7 @@ const RestaurantDetails = (props) => {
   };
 
   const columns = [
+    // { field: "id", headerName: "ID", width: 70 },
     {
       field: "image",
       headerName: "Image",
@@ -161,6 +148,18 @@ const RestaurantDetails = (props) => {
       renderCell: renderActionButtons,
     },
   ];
+
+  // const rows = [
+  //   { id: 1, price: "Snow", item: "Jon", quantity: 0 },
+  //   { id: 2, price: "Lannister", item: "Cersei", quantity: 0 },
+  //   { id: 3, price: "Lannister", item: "Jaime", quantity: 0 },
+  //   { id: 4, price: "Stark", item: "Arya", quantity: 0 },
+  //   { id: 5, price: "Targaryen", item: "Daenerys", quantity: 0 },
+  //   { id: 6, price: "Melisandre", item: null, quantity: 0 },
+  //   { id: 7, price: "Clifford", item: "Ferrara", quantity: 0 },
+  //   { id: 8, price: "Frances", item: "Rossini", quantity: 0 },
+  //   { id: 9, price: "Roxie", item: "Harvey", quantity: 0 },
+  // ];
 
   const [rows, setRows] = useState([]);
 
@@ -247,6 +246,7 @@ const RestaurantDetails = (props) => {
 
   // re-group menu array by category
   let menuCategoryArr = [];
+  let quantityObj = {}; // {123:1, 456:7}
   if (data["menuItems"]) {
     function groupBy(xs, f) {
       return xs.reduce(
@@ -256,6 +256,12 @@ const RestaurantDetails = (props) => {
     }
     // groupByCategory = {category1: [item1, item2], category2: [item3]}
     const groupedByCategory = groupBy(data["menuItems"], (c) => c.category);
+    for (const category in groupedByCategory) {
+      for (const item of groupedByCategory[category]) {
+        quantityObj[item["_id"]] = 0;
+      }
+    }
+    console.log("rendered once");
     menuCategoryArr = Object.keys(groupedByCategory);
   }
 
@@ -270,11 +276,7 @@ const RestaurantDetails = (props) => {
 
   // ----------------------- FOR RIGHT PANEL
   const handleChange = (prop) => (event) => {
-    let value = event.target.value;
-    if (prop === "pax" && event.target.value < 0) {
-      value = 0;
-    }
-    setQuery({ ...query, [prop]: value });
+    setQuery({ ...query, [prop]: event.target.value });
   };
   // specify min date for date picker
   const generateCurrentDate = () => {
@@ -310,117 +312,25 @@ const RestaurantDetails = (props) => {
   }
 
   const printTimeSlots = slotArr.map((slot) => {
-    return (
-      <Button color="success" onClick={handleSlot}>
-        {slot}
-      </Button>
-    );
+    return <Button onClick={handleSlot}>{slot}</Button>;
   });
-
-  const handleReset = (e) => {
-    e.preventDefault();
-    setQuery({});
-    setSlotSelected(0);
-  };
-
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    let pass = false;
-    if (
-      query.date &&
-      query.date !== "" &&
-      query.pax &&
-      query.pax > 0 &&
-      slotSelected === undefined
-    ) {
-      pass = true;
-    }
-    const year = query.date.slice(0, 4);
-    const month = query.date.slice(5, 7);
-    const day = query.date.slice(8, 10);
-    const date = "date=" + year + month + day;
-    const pax = "pax=" + query.pax;
-    if (pass) {
-      const sloturl =
-        "http://localhost:5000/api/restaurant/slots/" +
-        queryId +
-        "?" +
-        date +
-        "&" +
-        pax;
-      getSlot(sloturl);
-    }
-  };
-
-  const handleReserve = async (e) => {
-    e.preventDefault();
-    let pass = false;
-    if (
-      query.date &&
-      query.date !== "" &&
-      query.pax &&
-      query.pax > 0 &&
-      slotSelected !== 0
-    ) {
-      pass = true;
-    }
-    if (pass === true) {
-      const year = query.date.slice(0, 4);
-      const month = Number(query.date.slice(5, 7)) - 1;
-      const day = Number(query.date.slice(8, 10));
-      const hour = Number(slotSelected.slice(0, 2));
-      const minute = Number(slotSelected.slice(3, 5));
-      const time = new Date(year, month, day, hour, minute);
-      const timeNum = time.getTime();
-      const payload = { id: queryId, time: timeNum, pax: query.pax };
-      const url = "http://localhost:5000/api/restaurant/makeReservation";
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-      const responseParse = await response.json();
-    }
-  };
 
   return (
     <>
       <Grid container>
         <Grid item md={9}>
           <div className="restaurantPage">
-            <Typography variant="h2">{data.name}</Typography>
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              className="restaurantInfo"
-              id="neighborhood"
-            >
+            <Typography variant="h4">{data.name}</Typography>
+            <p className="restaurantInfo" id="neighborhood">
               {data.neighborhood}
-            </Typography>
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              className="restaurantInfo"
-              id="cuisine"
-            >
+            </p>
+            <p className="restaurantInfo" id="cuisine">
               {cuisineStr}
-            </Typography>
+            </p>
             <div className="detailsRating">
-              <Typography variant="h6" color="error.dark" component="legend">
-                {data.rating}
-              </Typography>
-              <Rating
-                name="read-only"
-                sx={{ color: "error.main" }}
-                value={Number(data.rating)}
-                readOnly
-                precision={0.5}
-              />
-              <Typography variant="h6" color="error.dark" id="numberOfReviews">
-                23 Reviews
-              </Typography>
+              <Typography component="legend">{data.rating}</Typography>
+              <Rating name="read-only" value={3} readOnly />
+              <div id="numberOfReviews">23 Reviews</div>
             </div>
           </div>
           <img className="restaurantImgLeft" src={data.img}></img>
@@ -457,6 +367,8 @@ const RestaurantDetails = (props) => {
             </p>
             <br></br>
             <img src={mapUrl}></img>
+
+            {/* TO RENDER OPEN STATIC MAP FROM {MAP} */}
           </TabPanel>
           <TabPanel value={value} index={1}>
             {printCategory}
@@ -469,18 +381,6 @@ const RestaurantDetails = (props) => {
                 pageSize={5}
                 rowsPerPageOptions={[10]}
               />
-              <Button
-                className="addtocart"
-                variant="contained"
-                color="info"
-                href="#contained-buttons"
-                onClick={(e) => {
-                  e.preventDefault();
-                  props.updateOrders(quantity, data.menuItems);
-                }}
-              >
-                Add to cart
-              </Button>
             </div>
           </TabPanel>
           <TabPanel value={value} index={2}>
@@ -493,12 +393,11 @@ const RestaurantDetails = (props) => {
             <div className="bookingField" id="bookingDate">
               <TextField
                 id="outlined-basic"
-                margin="dense"
                 label="Date"
                 variant="outlined"
                 type="date"
-                onChange={handleChange("date")}
-                value={query.date || ""}
+                onChange={handleChange("time")}
+                value={query.date}
                 size="small"
                 inputProps={{
                   min: generateCurrentDate(),
@@ -511,13 +410,12 @@ const RestaurantDetails = (props) => {
             <div className="bookingField" id="bookingGuests">
               <TextField
                 id="outlined-basic"
-                margin="dense"
                 label="Guest(s)"
                 variant="outlined"
                 type="number"
                 size="small"
                 onChange={handleChange("pax")}
-                value={query.pax > 0 ? query.pax : 0}
+                value={query.pax}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -526,7 +424,6 @@ const RestaurantDetails = (props) => {
             <div className="bookingField" id="bookingTimeSelected">
               <TextField
                 id="outlined-basic"
-                margin="dense"
                 label="Time slot selected"
                 variant="outlined"
                 type="time"
@@ -540,35 +437,10 @@ const RestaurantDetails = (props) => {
                 }}
               />
             </div>
-            <Button
-              variant="contained"
-              color="info"
-              href="#contained-buttons"
-              onClick={handleReset}
-            >
-              Reset
-            </Button>
-            <Button
-              variant="contained"
-              color="info"
-              href="#contained-buttons"
-              onClick={handleSearch}
-            >
-              Search
-            </Button>
-            <Typography
-              variant="body1"
-              color="text.primary"
-              className="bookingField"
-              id="bookingTime"
-            >
+            <div className="bookingField" id="bookingTime">
               {printTimeSlots}
-            </Typography>
-            <Button
-              variant="contained"
-              href="#contained-buttons"
-              onClick={handleReserve}
-            >
+            </div>
+            <Button variant="contained" href="#contained-buttons">
               Reserve
             </Button>
           </Box>

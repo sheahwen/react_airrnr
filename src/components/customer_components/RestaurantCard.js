@@ -13,6 +13,7 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 
 const RestaurantCard = (props) => {
   const clickedId = props.id;
+  console.log(clickedId);
   const query = props.query;
 
   // print cuisine type
@@ -58,28 +59,20 @@ const RestaurantCard = (props) => {
           <Typography
             className="restaurantCard"
             id="cardCuisine"
-            variant="body3"
+            variant="body2"
             color="text.secondary"
           >
             {printCuisine}
           </Typography>
-          <br></br>
           <Typography variant="body3" color="text.secondary">
             <AccessTimeOutlinedIcon />
             {startHrs} - {closeHrs}
           </Typography>
           <Typography component="legend"></Typography>
-          <Rating
-            name="read-only"
-            sx={{ color: "error.main" }}
-            value={props.rating}
-            precision={0.5}
-            readOnly
-          />
+          <Rating name="read-only" value={props.rating} readOnly />
         </CardContent>
         <CardActions>
           <Button
-            color="warning"
             onClick={handleClick}
             size="small"
             component={RouterLink}
