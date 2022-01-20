@@ -7,23 +7,38 @@ const useFetch = (baseUrl) => {
   const [endPoint, setEndPoint] = useState("");
   const [options, setOptions] = useState({});
 
-  const callFetch = useCallback(
-    (routes, method = "GET", payload = {}) => {
-      setEndPoint(baseUrl + routes);
-      if (method !== "GET") {
-        const requestOptions = {
-          method: method,
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        };
-        setOptions(requestOptions);
-      } else {
-        setOptions({});
-      }
-      setLoading(true);
-    },
-    [baseUrl]
-  );
+  // const callFetch = useCallback(
+  //   (routes, method = "GET", payload = {}) => {
+  //     setEndPoint(baseUrl + routes);
+  //     if (method !== "GET") {
+  //       const requestOptions = {
+  //         method: method,
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify(payload),
+  //       };
+  //       setOptions(requestOptions);
+  //     } else {
+  //       setOptions({});
+  //     }
+  //     setLoading(true);
+  //   },
+  //   [baseUrl]
+  // );
+
+  const callFetch = (routes, method = "GET", payload = {}) => {
+    setEndPoint(baseUrl + routes);
+    if (method !== "GET") {
+      const requestOptions = {
+        method: method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      };
+      setOptions(requestOptions);
+    } else {
+      setOptions({});
+    }
+    setLoading(true);
+  };
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -36,12 +51,17 @@ const useFetch = (baseUrl) => {
           ...options,
           signal: abortController.signal,
         });
-        if (!response.ok) throw new Error("Error fetching data.");
         const json = await response.json();
-        setData(json.data);
+        if (json?.data === undefined) {
+          setData(json);
+        } else {
+          setData(json.data);
+        }
       } catch (err) {
-        setError({ status: true, message: err.message });
+        setError({ status: false, message: err.message });
       } finally {
+        setData(null);
+        setError(null);
         setLoading(false);
       }
     };

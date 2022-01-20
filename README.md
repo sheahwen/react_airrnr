@@ -25,8 +25,8 @@
 
 - /customer/home - homepage
 - /customer/filter - filter and show search results
-- /customer/restaurant-details - show restaurant details and where booking is done
 - /customer/orders - show all reservations
+- /show-restaurant/{restaurant name} - show restaurant details and allow users to make reservation here
 
 ### Helper Function, Custom Hooks
 
